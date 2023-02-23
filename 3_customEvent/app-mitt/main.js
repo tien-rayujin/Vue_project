@@ -1,3 +1,5 @@
+const emitter = mitt()
+
 const inputComponent = {
     template: `<input 
                 class="input is-small" type="text"
@@ -12,14 +14,13 @@ const inputComponent = {
     },
     methods: {
         monitorEnterKey() {
-            this.$emit("add-note", {
+            emitter.emit("add-note", {
                 note: this.input,
                 timestamps: new Date().toLocaleString()
             })
             this.input = ''
         }
-    },
-    emits: ['add-note']
+    }
 }
 
 
@@ -40,6 +41,9 @@ const app = {
             this.notes.push(event.note)
             this.timestamps.push(event.timestamps)
         }
+    },
+    created() {
+        emitter.on("add-note", this.addNote)
     }
 }
 

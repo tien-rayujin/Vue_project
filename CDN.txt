@@ -1,0 +1,14 @@
+Easy Event Bus with mitt: (they use Vuex(state, $store, mutations, actions, getters) instead)
+<script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+
+Vue latest: 
+<script src="https://unpkg.com/vue@next"></script>
+
+Vuex latest:
+<script src="https://unpkg.com/vuex@next"></script>
+
+Bulma (CSS-framework):
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css" integrity="sha512-HqxHUkJM0SYcbvxUw5P60SzdOTy/QVwA1JJrvaXJv4q7lmbDZCmZaqz01UPOaQveoxfYRv1tHozWGPMcuTBuvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+Font-awesome:
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
