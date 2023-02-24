@@ -35,3 +35,18 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.products--header {
+    border-bottom: 1px solid #E8E8E8;
+    padding-bottom: 15px;
+}
+
+.product-list {
+    padding-top: 10px;
+}
+
+.product-list--item {
+    padding: 10px 0;
+}
+</style>
