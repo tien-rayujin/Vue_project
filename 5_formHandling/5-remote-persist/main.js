@@ -40,7 +40,25 @@ const InputForm = {
                     </div>
                 </div>
 
-                <button class="ui button">Submit</button>
+                <button v-if="saveStatus === 'SAVING'"
+                disabled class="ui button">
+                    Saving...
+                    </button>
+                <button v-if="saveStatus === 'SUCCESS'"
+                :disabled="isNewItemInputLimitExceeded || isNotUrgent"
+                class="ui button">
+                    Saved! Submit another
+                    </button>
+                <button v-if="saveStatus === 'ERROR'"
+                :disabled="isNewItemInputLimitExceeded || isNotUrgent"
+                class="ui button">
+                    Save Failed - Retry?
+                    </button>
+                <button v-if="saveStatus === 'READY'"
+                :disabled="isNewItemInputLimitExceeded || isNotUrgent"
+                class="ui button">
+                    Submit
+                    </button>
 
                 <div class="ui segment">
                     <h4 class="ui header">Items</h4>
@@ -66,7 +84,16 @@ const InputForm = {
                 termsAndConditions: undefined
             },
             items: [], // show list of items user has added
+            loading: false,
+            saveStatus: 'READY',    // READY, SAVING, SUCCESS, ERROR
         }
+    },
+    created() {
+        this.loading = true,
+        apiClient.loadItems().then((items) => {
+            this.items = items;
+            this.loading = false;
+        })
     },
     computed: {
         isNewItemInputLimitExceeded(){
@@ -84,12 +111,23 @@ const InputForm = {
             this.fieldErrors = this.validateForm(this.fields)
             if(Object.keys(this.fieldErrors).length) return;    // if there are errors, don't submit
 
-            // this.items.push(this.fields.newItem)
-            this.items.push(`${this.fields.newItem} - ${this.fields.email} - ${this.fields.urgency} - ${this.fields.termsAndConditions ? 'Accepted' : 'Not accepted'}`)
-            this.fields.newItem = ''
-            this.fields.email = ''
-            this.fields.urgency = ''
-            this.fields.termsAndConditions = false
+            const items = [...this.items, this.fields.newItem]
+
+            this.saveStatus = 'SAVING'
+            apiClient.saveItems(items)
+                .then(() =>{
+                    this.items = items; // update items
+                    // clear fields
+                    this.fields.newItem = '';
+                    this.fields.email = '';
+                    this.fields.urgency = '';
+                    this.fields.termsAndConditions = false;
+                    this.saveStatus = 'SUCCESS'
+                })
+                .catch((err) => {
+                    console.log(err);
+                    this.saveStatus = 'ERROR'
+                })
         },
         validateForm(fields){
             // check if fields are truthiness (not empty)
@@ -106,6 +144,35 @@ const InputForm = {
             return re.test(email);
         }
     }
+}
+
+// responsible for loading and saving items
+let apiClient  = {
+    loadItems: function() {
+        return {
+            then: function(cb) {
+                setTimeout(() => {
+                    cb(JSON.parse(localStorage.items || '[]'))
+                }, 1000)
+            }
+        }
+    },
+
+    saveItems: function(items) {
+        const success = !!(this.count++ % 2);   // every other time, it will be false
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if(!success) return reject({ success })
+
+                // save to local storage
+                localStorage.items = JSON.stringify(items);
+                return resolve({ success })
+            }, 1000)
+        })
+    },
+
+    count: 1,
 }
 
 Vue.createApp({

@@ -12,3 +12,6 @@ Bulma (CSS-framework):
 
 Font-awesome:
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+LocalStorage:
+<script src="https://cdnjs.cloudflare.com/ajax/libs/localStorage/2.0.1/localStorage.min.js" integrity="sha512-Om7n4oPnCk0KyQ6M3i8agnyW+vBM8ileUcLwqT9UdRHHuh4tuZSf8pkcGE4quTfj0LoU4cN38QDsaDKdJM6ZYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
